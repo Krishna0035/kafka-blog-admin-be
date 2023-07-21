@@ -1,10 +1,14 @@
 package com.blogadmin.kafka.consumer;
 
+import com.blogadmin.blog.dto.BlogLogDto;
+import com.blogadmin.blog.entity.Blog;
+import com.blogadmin.blog.service.BlogService;
 import com.blogadmin.kafka.entity.RegisterUserLogDto;
 import com.blogadmin.kafka.entity.User;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +16,12 @@ import org.springframework.stereotype.Service;
 public class KafkaConsumer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumer.class);
+
+    @Autowired
+    private Gson gson;
+
+    @Autowired
+    private BlogService blogService;
 
 
     @KafkaListener(topics = "user-login" , groupId = "myGroup")
@@ -25,9 +35,6 @@ public class KafkaConsumer {
     public void receiveRegisterUserJsonMessage(String  user) {
         LOGGER.info("new User registered   " + user);
 
-
-
-        Gson gson = new Gson();
 
         RegisterUserLogDto registerUserLogDto = gson.fromJson(user, RegisterUserLogDto.class);
 
@@ -53,6 +60,16 @@ public class KafkaConsumer {
 
     }
 
+    @KafkaListener(topics = "blog-details" , groupId = "myGroup")
+    public void receiveCreateBlogJsonMessage(String  blog) {
+        LOGGER.info("blog created   " + blog);
 
+
+        BlogLogDto blogLogDto = gson.fromJson(blog, BlogLogDto.class);
+
+        blogService.createBlogLog(blogLogDto);
+
+        LOGGER.info("blog saved to db   " + blog);
+    }
 
 }

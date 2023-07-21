@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class KafkaConsumer {
 
@@ -40,13 +42,14 @@ public class KafkaConsumer {
     @KafkaListener(topics = "user-login" , groupId = "myGroup")
     public void receiveJsonMessage(String  user) {
         LOGGER.info("user logged in   " + user);
-        Gson gson = new Gson();
+
 
         LoginLogDto loginLog = gson.fromJson(user, LoginLogDto.class);
 
+//
         // Access the fields
         Long id = loginLog.getId();
-        String loginAt = loginLog.getLoginAt();
+        LocalDateTime loginAt = loginLog.getLoginAt();
         String channel = loginLog.getChannel();
         loginLogRepository.save(new LoginLog(loginLog));
     }

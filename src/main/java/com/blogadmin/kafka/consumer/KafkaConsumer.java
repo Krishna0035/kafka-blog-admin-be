@@ -2,12 +2,13 @@ package com.blogadmin.kafka.consumer;
 
 import com.blogadmin.blog.dto.BlogLogDto;
 import com.blogadmin.blog.service.BlogService;
+
 import com.blogadmin.kafka.entity.LoginLog;
 import com.blogadmin.kafka.entity.dto.LoginLogDto;
-import com.blogadmin.kafka.entity.dto.RegisterUserLogDto;
-import com.blogadmin.kafka.entity.User;
 import com.blogadmin.kafka.repository.LoginLogRepository;
 import com.blogadmin.kafka.repository.UserRepository;
+import com.blogadmin.user.dto.RegisterUserLogDto;
+import com.blogadmin.user.entity.User;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,14 +43,18 @@ public class KafkaConsumer {
     @KafkaListener(topics = "user-login" , groupId = "myGroup")
     public void receiveJsonMessage(String  user) {
         LOGGER.info("user logged in   " + user);
-
+        Gson gson = new Gson();
 
         LoginLogDto loginLog = gson.fromJson(user, LoginLogDto.class);
 
-//
+
+
+
         // Access the fields
         Long id = loginLog.getId();
         LocalDateTime loginAt = loginLog.getLoginAt();
+
+        // Access the fields
         String channel = loginLog.getChannel();
         loginLogRepository.save(new LoginLog(loginLog));
     }

@@ -1,6 +1,7 @@
-package com.blogadmin.kafka.entity;
+package com.blogadmin.user.entity;
 
-import com.blogadmin.kafka.entity.dto.RegisterUserLogDto;
+
+import com.blogadmin.user.dto.RegisterUserLogDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

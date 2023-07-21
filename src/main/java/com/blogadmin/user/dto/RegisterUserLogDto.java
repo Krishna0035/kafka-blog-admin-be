@@ -1,7 +1,5 @@
 
-package com.blogadmin.kafka.entity.dto;
-
-
+package com.blogadmin.user.dto;
 
 
 import lombok.AllArgsConstructor;

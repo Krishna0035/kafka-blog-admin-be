@@ -1,14 +1,11 @@
 package com.blogadmin.kafka.entity;
 
-import jdk.jfr.Enabled;
+import com.blogadmin.kafka.entity.dto.RegisterUserLogDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 @Entity
 @Table(name = "users")

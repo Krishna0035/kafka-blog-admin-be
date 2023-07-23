@@ -8,4 +8,6 @@ import java.util.List;
 public interface BlogLikeLogRepository extends JpaRepository<BlogLikeLog,Long> {
 
     public List<BlogLikeLog> findAllByBlogidIn(List<Long> blogId);
+
+    public List<BlogLikeLog> findAllByBlogid(Long blogId);
 }

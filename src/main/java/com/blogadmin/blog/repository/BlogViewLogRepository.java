@@ -8,4 +8,6 @@ import java.util.List;
 public interface BlogViewLogRepository extends JpaRepository<BlogViewLog,Long> {
 
     public List<BlogViewLog> findAllByBlogidIn(List<Long> blogId);
+
+    public List<BlogViewLog> findAllByBlogid(Long blogId);
 }

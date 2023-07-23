@@ -1,6 +1,7 @@
 package com.blogadmin.blog;
 
 
+import com.blogadmin.blog.dto.BlogActivityResponseDto;
 import com.blogadmin.blog.dto.BlogLogResponseDto;
 import com.blogadmin.blog.dto.GetAllBlogRequestDto;
 import com.blogadmin.blog.service.BlogService;
@@ -20,5 +21,10 @@ public class BlogController {
     @PostMapping("/get-all-blogs")
     public List<BlogLogResponseDto> getAllBlogs(@RequestBody GetAllBlogRequestDto requestDto){
         return blogService.getAllBlogBlogLogs(requestDto);
+    }
+
+    @PostMapping("/get-blog-activity/{id}")
+    public BlogActivityResponseDto getAllBlogs(@PathVariable("id") Long id){
+        return blogService.getBlogAllActivities(id);
     }
 }

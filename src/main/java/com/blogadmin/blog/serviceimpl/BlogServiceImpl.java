@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -125,7 +126,34 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public BlogActivityResponseDto getBlogAllActivities(Long id) {
-        return null;
+
+        List<BlogActivityLog> activityLogList = blogActivityRepository.findByBlogidOrderByActivityAtDesc(id);
+
+        List<BlogActivityResponseDto.BlogActivities> activityDtoList = activityLogList.stream().map(activity -> new BlogActivityResponseDto.BlogActivities(activity)).collect(Collectors.toList());
+
+
+        List<BlogLikeLog> allByBlogLike = blogLikeLogRepository.findAllByBlogid(id);
+
+        List<BlogViewLog> allByBlogview = blogViewLogRepository.findAllByBlogid(id);
+
+        Blog blog = blogDaoService.getABlog(id);
+
+        LocalDateTime lastActivityAt = null;
+
+         String lastActivity = null;
+
+        if(activityLogList.size()>0){
+            lastActivityAt=activityLogList.get(0).getActivityAt();
+            lastActivity=activityLogList.get(0).getActivity();
+        }
+
+        BlogLogResponseDto blogLogResponseDto = new BlogLogResponseDto(blog,lastActivityAt,lastActivity,(long)allByBlogview.size(),(long)allByBlogLike.size());
+
+
+        BlogActivityResponseDto blogActivityResponseDto = new BlogActivityResponseDto(blogLogResponseDto,activityDtoList);
+
+
+        return blogActivityResponseDto;
     }
 
 

@@ -28,4 +28,8 @@ public class BlogDaoService {
         return blogRepository.findAll();
     }
 
+    public Blog getABlog(Long id){
+        return blogRepository.findById(id).get();
+    }
+
 }

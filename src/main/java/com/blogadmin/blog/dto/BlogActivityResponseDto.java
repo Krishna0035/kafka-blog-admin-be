@@ -1,10 +1,12 @@
 package com.blogadmin.blog.dto;
 
+import com.blogadmin.blog.entity.BlogActivityLog;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -22,7 +24,7 @@ public class BlogActivityResponseDto {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-   static class BlogActivities{
+   public static class BlogActivities{
 
         private Long id;
 
@@ -32,9 +34,15 @@ public class BlogActivityResponseDto {
 
         private String activity;
 
-        private String activityAt;
+        private LocalDateTime activityAt;
 
-
+        public BlogActivities(BlogActivityLog blogActivityLog) {
+            this.id = blogActivityLog.getId();
+            this.blogId = blogActivityLog.getBlogid();
+            this.activityBy = blogActivityLog.getActivityBy();
+            this.activity = blogActivityLog.getActivity();
+            this.activityAt = blogActivityLog.getActivityAt();
+        }
     }
 
 }

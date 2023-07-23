@@ -4,9 +4,11 @@ import com.blogadmin.user.entity.LoginLog;
 import com.blogadmin.user.entity.User;
 import com.blogadmin.user.repository.LoginLogRepository;
 import com.blogadmin.user.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserDao {
 
     private final UserRepository userRepository;

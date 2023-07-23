@@ -65,7 +65,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public void blogActivity(BlogActivityLogDto blogActivityLogDto) {
+    public void blogActivity(UserActivityLogDto blogActivityLogDto) {
         BlogActivityLog blogActivityLog = new BlogActivityLog(blogActivityLogDto);
         blogActivityRepository.save(blogActivityLog);
     }

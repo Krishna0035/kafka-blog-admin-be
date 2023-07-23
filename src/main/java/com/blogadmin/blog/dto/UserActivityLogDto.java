@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BlogActivityLogDto {
+public class UserActivityLogDto {
 
     private Long blogId;
 

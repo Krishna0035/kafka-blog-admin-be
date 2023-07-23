@@ -5,10 +5,12 @@ import com.blogadmin.user.daoServices.UserDao;
 import com.blogadmin.user.entity.LoginLog;
 import com.blogadmin.user.entity.User;
 import com.blogadmin.user.services.UserService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class UserServices implements UserService {
 
 

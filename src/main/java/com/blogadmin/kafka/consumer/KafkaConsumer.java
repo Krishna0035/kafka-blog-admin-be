@@ -1,6 +1,6 @@
 package com.blogadmin.kafka.consumer;
 
-import com.blogadmin.blog.dto.BlogActivityLogDto;
+import com.blogadmin.blog.dto.UserActivityLogDto;
 import com.blogadmin.blog.dto.BlogLikeLogDto;
 import com.blogadmin.blog.dto.BlogLogDto;
 import com.blogadmin.blog.dto.BlogViewLogDto;
@@ -156,11 +156,23 @@ public class KafkaConsumer {
         LOGGER.info("blog created   " + blog);
 
 
-        BlogActivityLogDto blogActivityLogDto = gson.fromJson(blog, BlogActivityLogDto.class);
+        UserActivityLogDto blogActivityLogDto = gson.fromJson(blog, UserActivityLogDto.class);
 
         blogService.blogActivity(blogActivityLogDto);
 
         LOGGER.info("blog saved to db   " + blog);
+    }
+
+    @KafkaListener(topics = "user-activity-details" , groupId = "myGroup")
+    public void receiveActivityUserJsonMessage(String  userActivity) {
+        LOGGER.info("user created   " + userActivity);
+
+
+        UserActivityLogDto userActivityLogDto = gson.fromJson(userActivity, UserActivityLogDto.class);
+
+        blogService.blogActivity(userActivityLogDto);
+
+        LOGGER.info("user saved to db   " + userActivity);
     }
 
     // total hits and hits/day

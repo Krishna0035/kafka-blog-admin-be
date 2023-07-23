@@ -29,11 +29,11 @@ public class UserDao {
     }
 
     public List<LoginLog> getAllLoginUserWithMobile() {
-        return loginLogRepository.findByChannel("mobile");
+        return loginLogRepository.findByChannelAndStatus("mobile",1);
     }
 
     public List<LoginLog> getAllLoginUserWithWeb() {
-        return loginLogRepository.findByChannel("mobile");
+        return loginLogRepository.findByChannelAndStatus("web",1);
     }
 
 }

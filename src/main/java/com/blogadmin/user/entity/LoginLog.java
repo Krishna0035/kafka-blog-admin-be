@@ -23,6 +23,7 @@ public class LoginLog {
     private LocalDateTime loginAt;
     private String channel;
     private Long userId;
+    private Integer status;
 
 
     public LoginLog(LoginLogDto loginLogDto) {

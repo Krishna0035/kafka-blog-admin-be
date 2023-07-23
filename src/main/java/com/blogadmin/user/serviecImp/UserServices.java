@@ -6,6 +6,9 @@ import com.blogadmin.user.entity.LoginLog;
 import com.blogadmin.user.entity.User;
 import com.blogadmin.user.services.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserServices implements UserService {
 
 
@@ -28,6 +31,12 @@ public class UserServices implements UserService {
 
     @Override
     public ResponseDto getAllLogedInUser() {
-        return null;
+        List<List<LoginLog>> listOfAllLoginUser = new ArrayList<>();
+        List<LoginLog> allLoginUserWithWeb = userDao.getAllLoginUserWithWeb();
+        List<LoginLog> allLoginUserWithMobile = userDao.getAllLoginUserWithMobile();
+        listOfAllLoginUser.add(allLoginUserWithMobile);
+        listOfAllLoginUser.add(allLoginUserWithWeb);
+
+        return ResponseDto.builder().data(listOfAllLoginUser).build();
     }
 }

@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface LoginLogRepository extends JpaRepository<LoginLog, Long> {
 
-    public List<LoginLog> findByChannel(String channel);
+    public List<LoginLog> findByChannelAndStatus(String channel,int status);
 }

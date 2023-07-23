@@ -1,6 +1,9 @@
 package com.blogadmin.kafka.consumer;
 
+import com.blogadmin.blog.dto.BlogActivityLogDto;
+import com.blogadmin.blog.dto.BlogLikeLogDto;
 import com.blogadmin.blog.dto.BlogLogDto;
+import com.blogadmin.blog.dto.BlogViewLogDto;
 import com.blogadmin.blog.service.BlogService;
 
 
@@ -41,6 +44,7 @@ public class KafkaConsumer {
         this.loginLogRepository = loginLogRepository;
     }
 
+    // login track
 
     @KafkaListener(topics = "user-login" , groupId = "myGroup")
     public void receiveJsonMessage(String  user) {
@@ -60,6 +64,8 @@ public class KafkaConsumer {
         String channel = loginLog.getChannel();
         loginLogRepository.save(new LoginLog(loginLog));
     }
+
+    // user registration track
 
     @KafkaListener(topics = "user-registration" , groupId = "myGroup")
     public void receiveRegisterUserJsonMessage(String  user) {
@@ -89,6 +95,9 @@ public class KafkaConsumer {
 
     }
 
+
+    // new blog track
+
     @KafkaListener(topics = "blog-details" , groupId = "myGroup")
     public void receiveCreateBlogJsonMessage(String  blog) {
         LOGGER.info("blog created   " + blog);
@@ -100,5 +109,60 @@ public class KafkaConsumer {
 
         LOGGER.info("blog saved to db   " + blog);
     }
+
+
+
+
+
+    // blog view track
+
+
+    @KafkaListener(topics = "blog-view-details" , groupId = "myGroup")
+    public void receiveViewBlogJsonMessage(String  blog) {
+        LOGGER.info("blog created   " + blog);
+
+
+        BlogViewLogDto blogViewLogDto = gson.fromJson(blog, BlogViewLogDto.class);
+
+        blogService.viewBlog(blogViewLogDto);
+
+        LOGGER.info("blog saved to db   " + blog);
+    }
+
+
+    // blog like track
+
+
+    @KafkaListener(topics = "blog-like-details" , groupId = "myGroup")
+    public void receiveLikeBlogJsonMessage(String  blog) {
+        LOGGER.info("blog created   " + blog);
+
+
+        BlogLikeLogDto blogLikeLogDto = gson.fromJson(blog, BlogLikeLogDto.class);
+
+        blogService.likeBlog(blogLikeLogDto);
+
+        LOGGER.info("blog saved to db   " + blog);
+    }
+
+
+
+
+    // a particular blog activity track
+
+
+    @KafkaListener(topics = "blog-activity-details" , groupId = "myGroup")
+    public void receiveActivityBlogJsonMessage(String  blog) {
+        LOGGER.info("blog created   " + blog);
+
+
+        BlogActivityLogDto blogActivityLogDto = gson.fromJson(blog, BlogActivityLogDto.class);
+
+        blogService.blogActivity(blogActivityLogDto);
+
+        LOGGER.info("blog saved to db   " + blog);
+    }
+
+    // total hits and hits/day
 
 }

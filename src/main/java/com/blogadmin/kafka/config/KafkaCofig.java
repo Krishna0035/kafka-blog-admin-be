@@ -32,6 +32,31 @@ public class KafkaCofig {
     }
 
     @Bean
+    public NewTopic createBlogViewTopic(){
+        return TopicBuilder
+                .name("blog-view-details")
+                .build();
+    }
+
+
+    @Bean
+    public NewTopic createLikeBlogTopic(){
+        return TopicBuilder
+                .name("blog-like-details")
+                .build();
+    }
+
+
+    @Bean
+    public NewTopic createActivityBlogTopic(){
+        return TopicBuilder
+                .name("blog-activity-details")
+                .build();
+    }
+
+
+
+    @Bean
     public Gson getGson(){
         return new Gson();
     }

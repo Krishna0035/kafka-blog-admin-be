@@ -16,10 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -85,20 +82,44 @@ public class BlogServiceImpl implements BlogService {
 
         List<BlogViewLog> allViewList = blogViewLogRepository.findAllByBlogidIn(blogIdList);
 
-        Map<Long, Long> viewCountMap = allViewList.stream().collect(Collectors.toMap(BlogViewLog::getBlogid, blogViewLog -> allViewList.stream().filter(b -> b.getBlogid().equals(blogViewLog.getBlogid())).count()));
+        Map<Long, Long> viewCountMap = new HashMap<>();
+
+        Map<Long, Long> likeCountMap = new HashMap<>();
+
+//        for(Blog b: allBlogs){
+//
+//            int size = allViewList.stream().filter(v -> v.getBlogid().equals(b.getId())).collect(Collectors.toList()).size();
+//            viewCountMap.put(b.getId(),(long) size);
+//
+//        }
+
+
+//        Map<Long, Integer> viewCountMap = allViewList.stream().collect(Collectors.toMap(BlogViewLog::getBlogid, blogViewLog -> allViewList.stream().filter(b -> b.getBlogid().equals(blogViewLog.getBlogid())).collect(Collectors.toList()).size()));
 
         List<BlogLikeLog> allLikeList = blogLikeLogRepository.findAllByBlogidIn(blogIdList);
 
-        Map<Long, Long> likeCountMap = allLikeList.stream()
-                .collect(Collectors.toMap(BlogLikeLog::getBlogid, blogLikeLog -> allLikeList.stream().filter(b->b.getBlogid().equals(blogLikeLog.getBlogid())).count()));
+//        Map<Long, Long> likeCountMap = allLikeList.stream()
+//                .collect(Collectors.toMap(BlogLikeLog::getBlogid, blogLikeLog -> allLikeList.stream().filter(b->b.getBlogid().equals(blogLikeLog.getBlogid())).count()));
 
 
 
-        List<BlogActivityLog> allActivityList = blogActivityRepository.findLastActivityByBlogIds(blogIdList);
+        for(Blog b: allBlogs){
 
-        // Convert the List to a Map using blogId as the key and BlogActivityLog object as the value
-        Map<Long, BlogActivityLog> blogIdToLastActivityMap = allActivityList.stream()
-                .collect(Collectors.toMap(BlogActivityLog::getBlogid, blogActivityLog -> blogActivityLog));
+            int viewSize = allViewList.stream().filter(v -> v.getBlogid().equals(b.getId())).collect(Collectors.toList()).size();
+
+            int likeSize = allLikeList.stream().filter(v -> v.getBlogid().equals(b.getId())).collect(Collectors.toList()).size();
+
+            viewCountMap.put(b.getId(),(long) viewSize);
+            likeCountMap.put(b.getId(),(long) likeSize);
+
+        }
+
+
+//        List<BlogActivityLog> allActivityList = blogActivityRepository.findLastActivityByBlogIds(blogIdList);
+//
+//        // Convert the List to a Map using blogId as the key and BlogActivityLog object as the value
+//        Map<Long, BlogActivityLog> blogIdToLastActivityMap = allActivityList.stream()
+//                .collect(Collectors.toMap(blogActivityLog -> blogActivityLog.getBlogid(), blogActivityLog -> blogActivityLog));
 
 
 
@@ -106,8 +127,9 @@ public class BlogServiceImpl implements BlogService {
 
 
         List<BlogLogResponseDto> blogLogResponseDtos = allBlogs.stream().map(blog -> new BlogLogResponseDto(blog,
-                                                                blogIdToLastActivityMap.get(blog.getId()).getActivityAt(),
-                                                                blogIdToLastActivityMap.get(blog.getId()).getActivity(),
+//                                                                blogIdToLastActivityMap.get(blog.getId()).getActivityAt(),
+//                                                                blogIdToLastActivityMap.get(blog.getId()).getActivity(),
+                                                                null,null,
                                                                 viewCountMap.get(blog.getId()),
                                                                 likeCountMap.get(blog.getId()))) .collect(Collectors.toList());
 

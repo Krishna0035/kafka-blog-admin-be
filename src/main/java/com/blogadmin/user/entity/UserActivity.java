@@ -1,5 +1,7 @@
 package com.blogadmin.user.entity;
 
+import com.blogadmin.user.dto.RegisterUserLogDto;
+import com.blogadmin.user.dto.UserActivityLogDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,4 +26,11 @@ public class UserActivity {
     private String activity;
     private Long activityBy;
     private LocalDateTime activityAt;
+
+    public UserActivity(UserActivityLogDto userActivityLogDto) {
+        this.userId = userActivityLogDto.getUserId();
+        this.activity = userActivityLogDto.getActivity();
+        this.activityBy = userActivityLogDto.getActivityBy();
+        this.activityAt = userActivityLogDto.getActivityAt();
+    }
 }

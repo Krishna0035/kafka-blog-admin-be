@@ -1,6 +1,6 @@
 package com.blogadmin.blog.entity;
 
-import com.blogadmin.blog.dto.UserActivityLogDto;
+import com.blogadmin.blog.dto.BlogActivityLogDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,7 +28,7 @@ public class BlogActivityLog {
 
     private LocalDateTime activityAt;
 
-    public BlogActivityLog(UserActivityLogDto blogActivityLogDto) {
+    public BlogActivityLog(BlogActivityLogDto blogActivityLogDto) {
         this.blogid = blogActivityLogDto.getBlogId();
         this.activity = blogActivityLogDto.getActivity();
         this.activityBy = blogActivityLogDto.getActivityBy();

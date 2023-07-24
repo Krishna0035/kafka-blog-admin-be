@@ -1,17 +1,19 @@
 package com.blogadmin.kafka.consumer;
 
-import com.blogadmin.blog.dto.UserActivityLogDto;
+import com.blogadmin.blog.dto.BlogActivityLogDto;
 import com.blogadmin.blog.dto.BlogLikeLogDto;
 import com.blogadmin.blog.dto.BlogLogDto;
 import com.blogadmin.blog.dto.BlogViewLogDto;
 import com.blogadmin.blog.service.BlogService;
 
 
-
+import com.blogadmin.user.daoServices.UserDao;
 import com.blogadmin.user.dto.LoginLogDto;
 import com.blogadmin.user.dto.RegisterUserLogDto;
+import com.blogadmin.user.dto.UserActivityLogDto;
 import com.blogadmin.user.entity.LoginLog;
 import com.blogadmin.user.entity.User;
+import com.blogadmin.user.entity.UserActivity;
 import com.blogadmin.user.repository.LoginLogRepository;
 import com.blogadmin.user.repository.UserRepository;
 import com.google.gson.Gson;
@@ -37,11 +39,14 @@ public class KafkaConsumer {
 
     private final UserRepository userRepository;
     private final LoginLogRepository loginLogRepository;
+    private final UserDao userDao;
 
     public KafkaConsumer(UserRepository userRepository,
-                         LoginLogRepository loginLogRepository) {
+                         LoginLogRepository loginLogRepository,
+                         UserDao userDao) {
         this.userRepository = userRepository;
         this.loginLogRepository = loginLogRepository;
+        this.userDao = userDao;
     }
 
     // login track
@@ -156,7 +161,7 @@ public class KafkaConsumer {
         LOGGER.info("blog created   " + blog);
 
 
-        UserActivityLogDto blogActivityLogDto = gson.fromJson(blog, UserActivityLogDto.class);
+        BlogActivityLogDto blogActivityLogDto = gson.fromJson(blog, BlogActivityLogDto.class);
 
         blogService.blogActivity(blogActivityLogDto);
 
@@ -170,7 +175,8 @@ public class KafkaConsumer {
 
         UserActivityLogDto userActivityLogDto = gson.fromJson(userActivity, UserActivityLogDto.class);
 
-        blogService.blogActivity(userActivityLogDto);
+//        blogService.blogActivity(userActivityLogDto);
+        userDao.saveUserActivity(new UserActivity(userActivityLogDto));
 
         LOGGER.info("user saved to db   " + userActivity);
     }

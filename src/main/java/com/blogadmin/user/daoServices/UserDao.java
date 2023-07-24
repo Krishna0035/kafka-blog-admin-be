@@ -2,7 +2,9 @@ package com.blogadmin.user.daoServices;
 
 import com.blogadmin.user.entity.LoginLog;
 import com.blogadmin.user.entity.User;
+import com.blogadmin.user.entity.UserActivity;
 import com.blogadmin.user.repository.LoginLogRepository;
+import com.blogadmin.user.repository.UserActivityRepository;
 import com.blogadmin.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +15,16 @@ public class UserDao {
 
     private final UserRepository userRepository;
     private final LoginLogRepository loginLogRepository;
+    private final UserActivityRepository userActivityRepository;
+
 
 
     public UserDao(UserRepository userRepository,
-                   LoginLogRepository loginLogRepository) {
+                   LoginLogRepository loginLogRepository,
+                   UserActivityRepository userActivityRepository) {
         this.userRepository = userRepository;
         this.loginLogRepository = loginLogRepository;
+        this.userActivityRepository = userActivityRepository;
     }
 
 
@@ -37,6 +43,11 @@ public class UserDao {
     public List<LoginLog> getAllLoginUserWithWeb() {
         return loginLogRepository.findByChannelAndStatus("web",1);
     }
+
+    public void saveUserActivity(UserActivity userActivity){
+        userActivityRepository.save(userActivity);
+    }
+
 
 }
 

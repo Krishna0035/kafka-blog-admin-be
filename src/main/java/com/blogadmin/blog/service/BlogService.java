@@ -12,7 +12,7 @@ public interface BlogService {
 
     public void likeBlog(BlogLikeLogDto blogLikeLogDto);
 
-    public void blogActivity(UserActivityLogDto blogActivityLogDto);
+    public void blogActivity(BlogActivityLogDto blogActivityLogDto);
 
 
 

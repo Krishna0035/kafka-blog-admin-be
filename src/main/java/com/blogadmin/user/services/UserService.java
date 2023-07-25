@@ -12,4 +12,6 @@ public interface UserService {
 
     public ResponseDto getAllLogedInUser();
 
+    public ResponseDto getAllHits();
+
 }

@@ -72,7 +72,9 @@ public class BlogServiceImpl implements BlogService {
 
         PageRequest pageInformation = getPageInformation(request);
 
-        List<Blog> allBlogs =  !request.getOrderType().equals("totalViews")  && !request.getOrderType().equals("totalLikes") ? blogDaoService.getAllBlogs(pageInformation): blogDaoService.getAllBlogs();
+        List<Blog> allBlogs =  (request.getSortBy().equals("totalViews")  || request.getSortBy().equals("totalLikes")) ?
+                blogDaoService.getAllBlogs():
+                blogDaoService.getAllBlogs(pageInformation);
 
 
 
@@ -134,11 +136,17 @@ public class BlogServiceImpl implements BlogService {
                                                                 likeCountMap.get(blog.getId()))) .collect(Collectors.toList());
 
 
-        if(request.getOrderType().equals("totalViews") ){
+        if(request.getSortBy().equals("totalViews") &&  request.getOrderType().equals("desc")){
+            List<BlogLogResponseDto> collect = blogLogResponseDtos.stream().sorted(Comparator.comparing(BlogLogResponseDto::getTotalViews).reversed()).collect(Collectors.toList());
+            return collect;
+        }else if(request.getSortBy().equals("totalViews") &&  request.getOrderType().equals("asc")){
             List<BlogLogResponseDto> collect = blogLogResponseDtos.stream().sorted(Comparator.comparing(BlogLogResponseDto::getTotalViews)).collect(Collectors.toList());
             return collect;
         }
-        if(request.getOrderType().equals("totalLikes") ){
+        if(request.getSortBy().equals("totalLikes")&&  request.getOrderType().equals("desc") ){
+            List<BlogLogResponseDto> collect = blogLogResponseDtos.stream().sorted(Comparator.comparing(BlogLogResponseDto::getTotalLikes).reversed()).collect(Collectors.toList());
+            return collect;
+        }else if(request.getSortBy().equals("totalLikes")&&  request.getOrderType().equals("asc")){
             List<BlogLogResponseDto> collect = blogLogResponseDtos.stream().sorted(Comparator.comparing(BlogLogResponseDto::getTotalLikes)).collect(Collectors.toList());
             return collect;
         }

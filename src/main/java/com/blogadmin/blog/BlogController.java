@@ -23,7 +23,7 @@ public class BlogController {
         return blogService.getAllBlogBlogLogs(requestDto);
     }
 
-    @PostMapping("/get-blog-activity/{id}")
+    @GetMapping("/get-blog-activity/{id}")
     public BlogActivityResponseDto getAllBlogs(@PathVariable("id") Long id){
         return blogService.getBlogAllActivities(id);
     }

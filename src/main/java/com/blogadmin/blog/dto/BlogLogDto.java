@@ -18,7 +18,11 @@ public class BlogLogDto {
 
     private String title;
 
+    private String description;
+
     private LocalDateTime createdAt;
 
     private Long createdBy;
+
+    private String createdByName;
 }

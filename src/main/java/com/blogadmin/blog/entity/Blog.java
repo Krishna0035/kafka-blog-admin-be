@@ -23,6 +23,10 @@ public class Blog {
 
     private String title;
 
+    private String description;
+
+    private String createdByName;
+
     private LocalDateTime createdAt;
 
     private Long createdBy;
@@ -33,5 +37,7 @@ public class Blog {
         this.title=blogLogDto.getTitle();
         this.createdAt=blogLogDto.getCreatedAt();
         this.createdBy=blogLogDto.getCreatedBy();
+        this.description=blogLogDto.getDescription();
+        this.createdByName=blogLogDto.getCreatedByName();
     }
 }

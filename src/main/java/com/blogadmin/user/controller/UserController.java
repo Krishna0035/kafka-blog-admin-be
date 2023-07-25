@@ -31,7 +31,10 @@ public class UserController {
 
 
 
-
+    @GetMapping("/all-hits")
+    public ResponseDto getAllHits(){
+        return userService.getAllHits();
+    }
 
 
 

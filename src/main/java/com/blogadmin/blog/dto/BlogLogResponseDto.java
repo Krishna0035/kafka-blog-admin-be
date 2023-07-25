@@ -33,6 +33,10 @@ public class BlogLogResponseDto {
 
     private Long totalLikes;
 
+    private String description;
+
+    private String createdByName;
+
 
     public BlogLogResponseDto(Blog blog,LocalDateTime lastActivityAt,String lastActivity, Long totalViews, Long totalLikes) {
         this.id = blog.getId();
@@ -43,5 +47,7 @@ public class BlogLogResponseDto {
         this.createdBy = blog.getCreatedBy();
         this.totalViews = totalViews;
         this.totalLikes = totalLikes;
+        this.description=blog.getDescription();
+        this.createdByName=blog.getCreatedByName();
     }
 }

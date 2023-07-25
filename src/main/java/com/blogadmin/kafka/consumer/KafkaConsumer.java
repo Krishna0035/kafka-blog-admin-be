@@ -7,13 +7,16 @@ import com.blogadmin.blog.dto.BlogViewLogDto;
 import com.blogadmin.blog.service.BlogService;
 
 
+import com.blogadmin.common.dto.HitLogDto;
 import com.blogadmin.user.daoServices.UserDao;
 import com.blogadmin.user.dto.LoginLogDto;
 import com.blogadmin.user.dto.RegisterUserLogDto;
 import com.blogadmin.user.dto.UserActivityLogDto;
+import com.blogadmin.user.entity.HitLog;
 import com.blogadmin.user.entity.LoginLog;
 import com.blogadmin.user.entity.User;
 import com.blogadmin.user.entity.UserActivity;
+import com.blogadmin.user.repository.HitLogRepository;
 import com.blogadmin.user.repository.LoginLogRepository;
 import com.blogadmin.user.repository.UserRepository;
 import com.google.gson.Gson;
@@ -40,6 +43,9 @@ public class KafkaConsumer {
     private final UserRepository userRepository;
     private final LoginLogRepository loginLogRepository;
     private final UserDao userDao;
+
+    @Autowired
+    private HitLogRepository hitLogRepository;
 
     public KafkaConsumer(UserRepository userRepository,
                          LoginLogRepository loginLogRepository,
@@ -179,6 +185,21 @@ public class KafkaConsumer {
         userDao.saveUserActivity(new UserActivity(userActivityLogDto));
 
         LOGGER.info("user saved to db   " + userActivity);
+    }
+
+
+    @KafkaListener(topics = "hits-details" , groupId = "myGroup")
+    public void receiveHitsJsonMessage(String  hits) {
+
+
+
+        HitLogDto hitLogDto = gson.fromJson(hits, HitLogDto.class);
+
+//        blogService.blogActivity(userActivityLogDto);
+        HitLog hitLog = new HitLog(hitLogDto);
+        hitLogRepository.save(hitLog);
+//
+//        LOGGER.info("user saved to db   " + userActivity);
     }
 
     // total hits and hits/day

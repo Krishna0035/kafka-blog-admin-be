@@ -54,6 +54,12 @@ public class KafkaCofig {
                 .build();
     }
 
+    @Bean
+    public NewTopic createHitsTopic(){
+        return TopicBuilder
+                .name("hits-details")
+                .build();
+    }
 
 
     @Bean

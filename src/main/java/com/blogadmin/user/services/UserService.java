@@ -12,6 +12,10 @@ public interface UserService {
 
     public ResponseDto getAllLogedInUser();
 
+
     public ResponseDto getAllHits();
+
+    public ResponseDto getAUserWithActivity(Long userId);
+
 
 }

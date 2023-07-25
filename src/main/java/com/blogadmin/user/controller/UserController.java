@@ -5,12 +5,13 @@ import com.blogadmin.common.dto.ResponseDto;
 import com.blogadmin.user.services.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/admin/user")
 public class UserController {
 
     private final UserService userService;
@@ -27,6 +28,12 @@ public class UserController {
     @GetMapping("/all-loged-In")
     public ResponseDto getAllLogedInUsers(){
         return userService.getAllLogedInUser();
+    }
+
+
+    @GetMapping("/user-activity")
+    public ResponseDto getAUserWithActivity(@RequestParam("userId") Long userId){
+        return userService.getAUserWithActivity(userId);
     }
 
 

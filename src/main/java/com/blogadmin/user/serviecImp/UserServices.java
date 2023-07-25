@@ -5,6 +5,9 @@ import com.blogadmin.common.dto.ResponseDto;
 import com.blogadmin.user.daoServices.UserDao;
 import com.blogadmin.user.dto.HitLogResponseDto;
 import com.blogadmin.user.entity.HitLog;
+
+import com.blogadmin.user.dto.UserActivityResDto;
+
 import com.blogadmin.user.entity.LoginLog;
 import com.blogadmin.user.entity.User;
 import com.blogadmin.user.repository.HitLogRepository;
@@ -64,11 +67,18 @@ public class UserServices implements UserService {
 
 
         HitLogResponseDto hitLogResponseDto = HitLogResponseDto.builder()
-                .totalHits((long)hitLogs.size())
+                .totalHits((long) hitLogs.size())
                 .hitsPerDay(hitsPerDay)
                 .build();
 
 
         return ResponseDto.builder().data(hitLogResponseDto).build();
+    }
+
+    public ResponseDto getAUserWithActivity(Long userId) {
+        UserActivityResDto aUserAndActivity = userDao.getAUserAndActivity(userId);
+      return ResponseDto.builder().status(true).message("success").data(aUserAndActivity).build();
+
+
     }
 }

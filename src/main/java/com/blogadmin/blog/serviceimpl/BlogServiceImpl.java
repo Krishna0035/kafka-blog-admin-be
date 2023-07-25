@@ -157,7 +157,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public BlogActivityResponseDto getBlogAllActivities(Long id) {
 
-        List<BlogActivityLog> activityLogList = blogActivityRepository.findByBlogidOrderByActivityAtDesc(id);
+        List<BlogActivityLog> activityLogList = blogActivityRepository.findByBlogidOrderByActivityAtAsc(id);
 
         List<BlogActivityResponseDto.BlogActivities> activityDtoList = activityLogList.stream().map(activity -> new BlogActivityResponseDto.BlogActivities(activity)).collect(Collectors.toList());
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -30,6 +31,10 @@ public class BlogDaoService {
 
     public Blog getABlog(Long id){
         return blogRepository.findById(id).get();
+    }
+
+    public List<Blog> getAllBlogsBetweenDates(LocalDateTime startDate,LocalDateTime endDate){
+        return blogRepository.findAllByCreatedAtBetweenOrderByCreatedAtDesc(startDate,endDate);
     }
 
 }

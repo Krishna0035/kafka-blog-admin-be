@@ -1,9 +1,7 @@
 package com.blogadmin.blog;
 
 
-import com.blogadmin.blog.dto.BlogActivityResponseDto;
-import com.blogadmin.blog.dto.BlogLogResponseDto;
-import com.blogadmin.blog.dto.GetAllBlogRequestDto;
+import com.blogadmin.blog.dto.*;
 import com.blogadmin.blog.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,5 +24,15 @@ public class BlogController {
     @GetMapping("/get-blog-activity/{id}")
     public BlogActivityResponseDto getAllBlogs(@PathVariable("id") Long id){
         return blogService.getBlogAllActivities(id);
+    }
+
+    @GetMapping("/get-blog-activity-chart-data")
+    public List<BlogActivityChartData> getAllBlogsChartData(){
+        return blogService.getBlogActivityChartData();
+    }
+
+    @GetMapping("/get-blog-stat")
+    public BarChartStatResponseData getAllBlogsStats(){
+        return blogService.getBlogStats();
     }
 }

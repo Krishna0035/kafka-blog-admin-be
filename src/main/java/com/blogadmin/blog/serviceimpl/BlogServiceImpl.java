@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -157,7 +158,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public BlogActivityResponseDto getBlogAllActivities(Long id) {
 
-        List<BlogActivityLog> activityLogList = blogActivityRepository.findByBlogidOrderByActivityAtAsc(id);
+        List<BlogActivityLog> activityLogList = blogActivityRepository.findByBlogidOrderByActivityAtDesc(id);
 
         List<BlogActivityResponseDto.BlogActivities> activityDtoList = activityLogList.stream().map(activity -> new BlogActivityResponseDto.BlogActivities(activity)).collect(Collectors.toList());
 
@@ -184,6 +185,92 @@ public class BlogServiceImpl implements BlogService {
 
 
         return blogActivityResponseDto;
+    }
+
+    @Override
+    public List<BlogActivityChartData> getBlogActivityChartData() {
+
+        List<Blog> allBlogs = blogDaoService.getAllBlogsBetweenDates(LocalDateTime.now().minusDays(7l), LocalDateTime.now());
+
+        Map<LocalDate, Long> blogMap = allBlogs.stream().collect(Collectors.groupingBy(blog -> blog.getCreatedAt().toLocalDate(), Collectors.counting()));
+
+        List<ChartBlogData> blogDataList = new ArrayList<>();
+
+        for(Map.Entry<LocalDate,Long> entry:blogMap.entrySet()){
+            ChartBlogData chartBlogData = new ChartBlogData(entry.getKey(),entry.getValue());
+            blogDataList.add(chartBlogData);
+        }
+
+
+
+        List<BlogViewLog> allViews = blogViewLogRepository.findAllByViewedAtBetweenOrderByViewedAtDesc(LocalDateTime.now().minusDays(7l), LocalDateTime.now());
+
+        Map<LocalDate, Long> allViewsMap = allViews.stream().collect(Collectors.groupingBy(blogViewLog -> blogViewLog.getViewedAt().toLocalDate(), Collectors.counting()));
+
+        List<ChartViewData> viewDataList = new ArrayList<>();
+
+        for(Map.Entry<LocalDate,Long> entry:allViewsMap.entrySet()){
+            ChartViewData chartViewData = new ChartViewData(entry.getKey(),entry.getValue());
+            viewDataList.add(chartViewData);
+        }
+
+        BlogActivityChartData blogActivityChartDataForBlog = new BlogActivityChartData("Blog",blogDataList);
+        BlogActivityChartData blogActivityChartDataForView = new BlogActivityChartData("Views",viewDataList);
+
+        List<BlogActivityChartData> activityChartDataList = List.of(blogActivityChartDataForBlog,blogActivityChartDataForView);
+
+
+        return activityChartDataList;
+    }
+
+    @Override
+    public BarChartStatResponseData getBlogStats() {
+
+        long fromDay = 7l;
+
+        List<Blog> allBlogs = blogDaoService.getAllBlogsBetweenDates(LocalDateTime.now().minusDays(fromDay), LocalDateTime.now());
+
+        Map<LocalDate, Long> blogMap = allBlogs.stream().collect(Collectors.groupingBy(blog -> blog.getCreatedAt().toLocalDate(), Collectors.counting()));
+
+
+        List<BlogViewLog> allViews = blogViewLogRepository.findAllByViewedAtBetweenOrderByViewedAtDesc(LocalDateTime.now().minusDays(fromDay), LocalDateTime.now());
+
+        Map<LocalDate, Long> allViewsMap = allViews.stream().collect(Collectors.groupingBy(blogViewLog -> blogViewLog.getViewedAt().toLocalDate(), Collectors.counting()));
+
+
+        LocalDateTime fromDate = LocalDateTime.now().minusDays(fromDay);
+
+        List<LocalDate> dates = new ArrayList<>();
+
+        List<Integer> blogPostList =  new ArrayList<>();
+
+        List<Integer> blogViewList = new ArrayList<>();
+
+        for(int i=0 ;i<=fromDay;i++){
+
+            LocalDate date = fromDate.toLocalDate();
+            dates.add(date);
+
+            if(blogMap.containsKey(date)){
+                blogPostList.add(blogMap.get(date).intValue());
+            }else {
+                blogPostList.add(0);
+            }
+
+            if(allViewsMap.containsKey(date)){
+                blogViewList.add(allViewsMap.get(date).intValue());
+            }else {
+                blogViewList.add(0);
+            }
+            fromDate = fromDate.plusDays(1l);
+        }
+
+        BarChatData blogChartData = new BarChatData("Blog Post",blogPostList);
+        BarChatData viewChartData = new BarChatData("Views",blogViewList);
+
+        BarChartStatResponseData barChartStatResponseData = new BarChartStatResponseData(blogChartData,viewChartData,dates);
+
+        return barChartStatResponseData;
     }
 
 

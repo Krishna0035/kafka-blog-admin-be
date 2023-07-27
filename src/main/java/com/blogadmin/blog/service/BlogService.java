@@ -21,4 +21,9 @@ public interface BlogService {
 
 
     public BlogActivityResponseDto getBlogAllActivities(Long id);
+
+
+    public List<BlogActivityChartData> getBlogActivityChartData();
+
+    public BarChartStatResponseData  getBlogStats();
 }

@@ -24,5 +24,5 @@ public interface BlogActivityRepository extends JpaRepository<BlogActivityLog,Lo
 //    List<RecordCountDTO> findRecordCountsForEachHour(LocalDateTime fromTime);
 
 
-    List<BlogActivityLog> findByBlogidOrderByActivityAtAsc(Long blogid);
+    List<BlogActivityLog> findByBlogidOrderByActivityAtDesc(Long blogid);
 }

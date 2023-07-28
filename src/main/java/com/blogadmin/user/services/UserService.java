@@ -17,5 +17,7 @@ public interface UserService {
 
     public ResponseDto getAUserWithActivity(Long userId);
 
+    public ResponseDto getAllUserBasedOnPlateForm();
+
 
 }

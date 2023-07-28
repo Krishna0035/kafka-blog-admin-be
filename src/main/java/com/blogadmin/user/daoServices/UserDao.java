@@ -9,6 +9,7 @@ import com.blogadmin.user.repository.UserActivityRepository;
 import com.blogadmin.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,6 +76,13 @@ public class UserDao {
     public List<UserActivity> fetchUserActivity(Long userId) {
        return userActivityRepository.findByActivityBy(userId);
     }
+
+
+    public List<LoginLog> fetchUserBetweenTwoDates(LocalDateTime start,LocalDateTime end){
+        return loginLogRepository.findAllByLoginAtBetweenOrderByLoginAtDesc(start,end);
+    }
+
+
 
 
 }

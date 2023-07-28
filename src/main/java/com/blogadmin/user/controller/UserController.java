@@ -25,6 +25,11 @@ public class UserController {
         return userService.getAllUser();
     }
 
+    @GetMapping("/all-user-platform")
+    public ResponseDto getAllUserWithPlatform(){
+        return userService.getAllUserBasedOnPlateForm();
+    }
+
     @GetMapping("/all-loged-In")
     public ResponseDto getAllLogedInUsers(){
         return userService.getAllLogedInUser();
@@ -42,6 +47,10 @@ public class UserController {
     public ResponseDto getAllHits(){
         return userService.getAllHits();
     }
+
+
+
+
 
 
 

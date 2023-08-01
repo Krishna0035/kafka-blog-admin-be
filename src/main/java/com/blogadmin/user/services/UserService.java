@@ -20,4 +20,5 @@ public interface UserService {
     public ResponseDto getAllUserBasedOnPlateForm();
 
 
+
 }

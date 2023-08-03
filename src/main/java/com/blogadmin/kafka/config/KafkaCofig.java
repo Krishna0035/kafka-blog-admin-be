@@ -5,6 +5,7 @@ import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class KafkaCofig {
@@ -61,7 +62,16 @@ public class KafkaCofig {
                 .build();
     }
 
-
+    @Bean
+    public NewTopic createDemoTopic(){
+        return TopicBuilder
+                .name("demo")
+                .build();
+    }
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
     @Bean
     public Gson getGson(){
         return new Gson();

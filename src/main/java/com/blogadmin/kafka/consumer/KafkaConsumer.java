@@ -156,6 +156,18 @@ public class KafkaConsumer {
         LOGGER.info("blog saved to db   " + blog);
     }
 
+    @KafkaListener(topics = "demo" , groupId = "demo")
+    public void receiveDemoMessage(String  blog) {
+        LOGGER.info("blog created   " + blog);
+
+
+//        BlogLikeLogDto blogLikeLogDto = gson.fromJson(blog, BlogLikeLogDto.class);
+//
+//        blogService.likeBlog(blogLikeLogDto);
+
+        LOGGER.info("blog saved to db   " + blog);
+    }
+
 
 
 

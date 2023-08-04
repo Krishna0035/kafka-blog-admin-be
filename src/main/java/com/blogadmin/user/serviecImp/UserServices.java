@@ -94,8 +94,6 @@ public class UserServices implements UserService {
 //
         LocalDateTime localDateTime = LocalDateTime.now().minusDays(days);
 
-        System.out.println(localDateTime);
-
 
         List<LoginLog> loginLogs = userDao.fetchUserBetweenTwoDates(LocalDateTime.now().minusDays(days), LocalDateTime.now());
 
@@ -121,7 +119,8 @@ public class UserServices implements UserService {
         List<Long> listOfWeb = new ArrayList<>();
         List<Long> listOfApp = new ArrayList<>();
         List<LocalDate> listOfDates = new ArrayList<>();
-        for(Long i = 0L;i<days;i++){
+        for(Long i = 0L;i<=days;i++){
+
             Long current = days - i;
 
             listOfDates.add(LocalDate.now().minusDays(current));

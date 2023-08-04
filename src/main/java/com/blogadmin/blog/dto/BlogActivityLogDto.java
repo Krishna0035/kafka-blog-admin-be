@@ -20,6 +20,8 @@ public class BlogActivityLogDto {
 
     private Long activityBy;
 
+    private String activityByName;
+
     private LocalDateTime activityAt;
 
 }

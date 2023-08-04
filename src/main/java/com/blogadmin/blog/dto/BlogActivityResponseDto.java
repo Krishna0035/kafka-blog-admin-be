@@ -36,12 +36,15 @@ public class BlogActivityResponseDto {
 
         private LocalDateTime activityAt;
 
+        private String activityByName;
+
         public BlogActivities(BlogActivityLog blogActivityLog) {
             this.id = blogActivityLog.getId();
             this.blogId = blogActivityLog.getBlogid();
             this.activityBy = blogActivityLog.getActivityBy();
             this.activity = blogActivityLog.getActivity();
             this.activityAt = blogActivityLog.getActivityAt();
+            this.activityByName = blogActivityLog.getActivityByName();
         }
     }
 

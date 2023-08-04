@@ -27,10 +27,12 @@ public class BlogLikeLog {
     private Long likedBy;
 
     private LocalDateTime likedAt;
+    private String activityByName;
 
     public BlogLikeLog(BlogLikeLogDto blogLikeLogDto) {
         this.blogid = blogLikeLogDto.getBlogId();
         this.likedBy = blogLikeLogDto.getLikedBy();
         this.likedAt = blogLikeLogDto.getLikedAt();
+        this.activityByName = blogLikeLogDto.getActivityByName();
     }
 }

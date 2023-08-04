@@ -25,6 +25,7 @@ public class UserActivity {
     private Long userId;
     private String activity;
     private Long activityBy;
+    private String activityByName;
     private LocalDateTime activityAt;
 
     public UserActivity(UserActivityLogDto userActivityLogDto) {
@@ -32,5 +33,6 @@ public class UserActivity {
         this.activity = userActivityLogDto.getActivity();
         this.activityBy = userActivityLogDto.getActivityBy();
         this.activityAt = userActivityLogDto.getActivityAt();
+        this.activityByName=userActivityLogDto.getActivityByName();
     }
 }

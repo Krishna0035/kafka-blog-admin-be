@@ -29,10 +29,13 @@ public class BlogViewLog {
     private Long viewedBy;
 
     private LocalDateTime viewedAt;
+    private String activityByName;
+
 
     public BlogViewLog(BlogViewLogDto blogViewLogDto) {
         this.blogid = blogViewLogDto.getBlogId();
         this.viewedBy = blogViewLogDto.getViewedBy();
         this.viewedAt = blogViewLogDto.getViewedAt();
+        this.activityByName=blogViewLogDto.getActivityByName();
     }
 }

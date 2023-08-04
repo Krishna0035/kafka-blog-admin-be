@@ -20,5 +20,7 @@ public class BlogLikeLogDto {
 
     private Long likedBy;
 
+    private String activityByName;
+
     private LocalDateTime likedAt;
 }

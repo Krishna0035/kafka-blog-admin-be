@@ -15,5 +15,6 @@ public class UserActivityLogDto {
     private Long userId;
     private String activity;
     private Long activityBy;
+    private String activityByName;
     private LocalDateTime activityAt;
 }

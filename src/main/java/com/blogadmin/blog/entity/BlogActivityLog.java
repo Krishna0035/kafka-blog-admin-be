@@ -31,10 +31,12 @@ public class BlogActivityLog {
 
     private LocalDateTime activityAt;
 
+    private String activityByName;
     public BlogActivityLog(BlogActivityLogDto blogActivityLogDto) {
         this.blogid = blogActivityLogDto.getBlogId();
         this.activity = blogActivityLogDto.getActivity();
         this.activityBy = blogActivityLogDto.getActivityBy();
         this.activityAt = blogActivityLogDto.getActivityAt();
+        this.activityByName=blogActivityLogDto.getActivityByName();
     }
 }

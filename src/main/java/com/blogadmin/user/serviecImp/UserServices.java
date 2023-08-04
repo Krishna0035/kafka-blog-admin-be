@@ -106,7 +106,7 @@ public class UserServices implements UserService {
 
 
 
-        Map<LocalDate, Long> webCount = webUser.stream().collect(Collectors.groupingBy(web -> web.getLoginAt().toLocalDate(), Collectors.counting()));
+        Map<LocalDate, Long> webCount  = webUser.stream().collect(Collectors.groupingBy(web -> web.getLoginAt().toLocalDate(), Collectors.counting()));
         Map<LocalDate, Long> appCount = appUser.stream().collect(Collectors.groupingBy(app -> app.getLoginAt().toLocalDate(), Collectors.counting()));
 
 
